@@ -2,6 +2,7 @@
 
 #include "Eigen"
 #include <vector>
+#include <iostream>
 #include "UniqueID.h"
 
 enum EContext {
@@ -28,11 +29,10 @@ public:
 	// Returns the rotation as a float in either Radians or Degrees. 
 	float Get(ERotation aType = ERotation::Radians) const { return aType == ERotation::Radians ? Radians : Radians * RadToDeg; }
 	void Set(float aValue, ERotation aType = ERotation::Radians) { 
-		// Compact ternary operator degrees->radians conversion, and use of fmodf to get Radians in range -M_PI...M_PI
-		Radians = std::fmodf(
-			(aType == ERotation::Radians ? aValue : aValue / RadToDeg) + M_PI, 
-			M_PI * 2) 
-		- M_PI; 
+		// Compact ternary operator degrees->radians conversion.
+		float Value = (aType == ERotation::Radians ? aValue : aValue / RadToDeg);
+		// Use of fmodf and float-boolean multiplication to get Radians in range -M_PI...M_PI
+		Radians = std::fmodf(Value, M_PI * 2) + (M_PI * 2 * (Value < -M_PI));
 	}
 
 	// Simple add and subtract operators.

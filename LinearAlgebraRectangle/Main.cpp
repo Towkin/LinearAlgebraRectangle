@@ -30,7 +30,7 @@ int main() {
 	Rotation StartAngle(-(5.f * LastDigits + 30), ERotation::Degrees);
 	float StartSpeed = LastDigits;
 	Eigen::Vector2f StartVelocity = StartAngle * Eigen::Vector2f(StartSpeed, 0.f);
-	float AngularVelocity = 100.f * LastDigits;
+	float AngularVelocity = -100.f * LastDigits;
 	float GravityAcceleration = 9.82f;
 
 	Eigen::Vector2f StartPosition(0.f, 1.f + 0.1f * LastDigits);
@@ -48,7 +48,7 @@ int main() {
 	// Set the COM at the start position.
 	CenterOfMass.SetPosition(StartPosition, EContext::Global);
 
-	Eigen::Vector2f COMOffset = Eigen::Vector2f(RectangleWidth * -0.1f * LastDigits, RectangleHeight * -0.1f * LastDigits);
+	Eigen::Vector2f COMOffset = Eigen::Vector2f(RectangleWidth * 0.1f * LastDigits - RectangleWidth, RectangleHeight * -0.1f * LastDigits);
 	Eigen::Vector2f RectangleCenter = StartPosition - COMOffset - Eigen::Vector2f(RectangleWidth / 2, RectangleHeight / 2);
 
 	// Setup the verticies, using global coordinates.
